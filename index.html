@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gunung Bromo</title>
+	<style>
+		body{margin : 0;}
+		canvas{height: 100%; width: 100%;};
+		
+
+	</style>
+</head>
+
+<body>
+    <!-- jQuery code to display an information button and box when clicked. -->
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui.js"></script>
+<link rel=stylesheet href="css/jquery-ui.css" />
+<!--<link rel=stylesheet href="js/info.css"/> -->
+<script src="js/info.js"></script>
+
+<div id="infoButton" src="images/inbrom.PNG"></div>
+<div id="infoBox" title="GUNUNG BROMO">
+      adalah sebuah gunung berapi aktif di Jawa Timur, Indonesia. Gunung ini memiliki ketinggian 2.329 meter di atas permukaan laut dan berada dalam empat wilayah kabupaten, yakni Kabupaten Probolinggo, Kabupaten Pasuruan, Kabupaten Lumajang, dan Kabupaten Malang. Sebagai sebuah objek wisata, Bromo menjadi menarik karena statusnya sebagai gunung berapi yang masih aktif. Gunung Bromo termasuk dalam kawasan Taman Nasional Bromo Tengger Semeru.
+    <br>
+
+Gunung Bromo mempunyai sebuah kawah dengan garis tengah ± 800 meter (utara-selatan) dan ± 600 meter (timur-barat). Sedangkan daerah bahayanya berupa lingkaran dengan jari-jari 4 km dari pusat kawah Bromo. 
+</div>
+
+<script type="module">
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/build/three.module.js';
+import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/controls/OrbitControls.js';
+
+    var scene = new THREE.Scene();
+	scene.background = new THREE.Color( 0xFFFFFF );
+	var camera = new THREE.PerspectiveCamera( 90, window.innerWidth/window.innerHeight, 0.1, 1000);
+	var renderer = new THREE.WebGLRenderer(  );
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	document.body.appendChild(renderer.domElement);
+
+	window.addEventListener('resize',function(){
+		var width = window.innerWidth;
+		var height = window.innerHeight;
+		renderer.setSize(width,height);
+		camera.aspect = width / height;
+		camera.updateProjectionMatrix();
+	});
+	camera.position.z = 10;
+	camera.position.y = 1;
+
+	var controls = new OrbitControls(camera, renderer.domElement);
+	  controls.update();
+
+
+
+
+	var skyGeometry = new THREE.BoxGeometry( 50, 50, 50 );	
+	var materialArray = [
+	new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('images/depan2.JPG'),side: THREE.BackSide}),
+	new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('images/kanan.JPG'),side: THREE.BackSide}),
+	new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('images/gelap.JPG'),side: THREE.BackSide}),
+	new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('images/alas.JPG'),side: THREE.BackSide}),
+	new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('images/belakang.JPG'),side: THREE.BackSide}),
+	new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('images/kiri.JPG'),side: THREE.BackSide})
+	];
+	// for (var i = 0; i < 6; i++)
+	// 	materialArray.push( new THREE.MeshBasicMaterial({
+	// 		map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+	// 		side: THREE.BackSide
+	// 	}));
+	var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+	var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+	scene.add(skyBox);
+	
+
+        
+    
+	// render
+
+	var update = function(){
+		controls.update();
+	};
+
+	var render = function(){
+		renderer.render(scene,camera);
+	}
+
+	var loop = function(){
+		requestAnimationFrame(loop);
+		update();
+		render();
+	}
+
+	loop();
+
+</script>
+
+</body>
+</html>
